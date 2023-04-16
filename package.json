@@ -1,5 +1,6 @@
 {
-  "name": "vite-template-solid",
+  "name": "@hacking-night/sql-injection-demo",
+  "private": true,
   "version": "0.0.0",
   "description": "",
   "scripts": {
