@@ -34,7 +34,7 @@ export function DatabaseResult(props: { query: string }) {
   return (
     <Show when={!execResult().err} fallback={<Alert variant="danger">{"" + execResult().err}</Alert>}>
       <Show when={user()} fallback={<Alert variant="warning">Invalid credentials</Alert>}>
-        <Alert variant="success">Logged in as <b>{"" + user()}</b>.</Alert>
+        <Alert variant="success">Signed in as <b>{"" + user()}</b>.</Alert>
       </Show>
       <For each={execResult().results}>
         {(result) => (
