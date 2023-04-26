@@ -1,0 +1,23 @@
+.sql {
+  white-space: pre;
+  font-family: monospace, monospace;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.sql .dynamic {
+  border: 1px solid red;
+  padding: 2px;
+}
+
+.sql .keyword {
+  color: purple;
+}
+
+.sql .string {
+  color: green;
+}
+
+.sql .comment {
+  color: grey;
+}

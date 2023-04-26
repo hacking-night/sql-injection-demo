@@ -2,6 +2,10 @@ import { Accordion } from 'solid-bootstrap'
 import { Component, createSignal } from 'solid-js'
 import Highlight from "solid-highlight"
 import "highlight.js/styles/default.css"
+// @ts-ignore
+import lexer from "sql-parser/lib/lexer"
+import { tokenize } from './InjectionVisualizer/lexer'
+import { InjectionVisualizer, VulenerableSql } from './InjectionVisualizer/InjectionVisualizer'
 
 const code = `username = getRequestString("username")
 password = getRequestString("password")
@@ -9,10 +13,21 @@ password = getRequestString("password")
 sql = "SELECT * FROM users WHERE name = '" + username + "' AND password = '" + password + "'"
 `
 
+//const tokens = lexer.tokenize('select * from my_table')
+//console.log(tokens)
+
 
 const App: Component = () => {
   const [username, setUsername] = createSignal('erik')
   const [password, setPassword] = createSignal('123')
+
+  const sql: () => VulenerableSql = () => [
+    { type: 'static', text: "SELECT * FROM users WHERE name = '" },
+    { type: 'dynamic', text: username()  },
+    { type: 'static', text: "' AND password = '" },
+    { type: 'dynamic', text: password() },
+    { type: 'static', text: "'" }
+  ]
 
   return (
     <div style={{ display: "flex", "flex-direction": "column", "align-items": "center" }}>
@@ -46,9 +61,7 @@ const App: Component = () => {
         <Accordion.Item eventKey="0">
           <Accordion.Header>SQL</Accordion.Header>
           <Accordion.Body>
-            <Highlight class='fs-5' language='sql'>
-              {`SELECT * FROM users WHERE name = '${username()}' AND password = '${password()}'`}
-            </Highlight>
+            <InjectionVisualizer sql={sql()} />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
