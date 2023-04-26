@@ -1,11 +1,58 @@
-import type { Component } from 'solid-js';
+import { Accordion } from 'solid-bootstrap'
+import { Component, createSignal } from 'solid-js'
+import Highlight from "solid-highlight"
+import "highlight.js/styles/default.css"
 
-import logo from './logo.svg';
-import styles from './App.module.css';
+const code = `username = getRequestString("username")
+password = getRequestString("password")
+
+sql = "SELECT * FROM users WHERE name = '" + username + "' AND password = '" + password + "'"
+`
+
 
 const App: Component = () => {
+  const [username, setUsername] = createSignal('erik')
+  const [password, setPassword] = createSignal('123')
+
   return (
-    <>Test</>
+    <div style={{ display: "flex", "flex-direction": "column", "align-items": "center" }}>
+      <div style={{ width: "300px" }} class="mt-5">
+        <form>
+          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+          <input type="text" style="display:none" />
+          <input type="password" style="display:none" />
+
+          <div class="form-floating mb-1">
+            <input type="text" class="form-control" id="floatingInput" value={username()} onInput={(e) => setUsername(e.currentTarget.value)} autocomplete="nope" />
+            <label for="floatingInput">Username</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" value={password()} onInput={(e) => setPassword(e.currentTarget.value)} autocomplete="new-password" />
+            <label for="floatingPassword">Password</label>
+          </div>
+        </form>
+      </div>
+      <Accordion style={{ width: "1200px" }} class="mt-5">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Code</Accordion.Header>
+          <Accordion.Body>
+            <Highlight autoDetect={true} class="fs-5">
+              {code}
+            </Highlight>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+      <Accordion style={{ width: "1200px" }} class="mt-5">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>SQL</Accordion.Header>
+          <Accordion.Body>
+            <Highlight class='fs-5' language='sql'>
+              {`SELECT * FROM users WHERE name = '${username()}' AND password = '${password()}'`}
+            </Highlight>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+    </div>
   );
 };
 
