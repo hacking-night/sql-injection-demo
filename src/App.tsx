@@ -96,6 +96,20 @@ const App: Component = () => {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
+      <div class="text-muted mt-5">
+        By{" "}
+        <a target="_blank" class="text-muted" href="https://erikhofer.de">
+          Erik Hofer
+        </a>{" "}
+        |{" "}
+        <a
+          target="_blank"
+          class="text-muted"
+          href="https://github.com/hacking-night/sql-injection-demo"
+        >
+          GitHub
+        </a>
+      </div>
     </div>
   );
 };
