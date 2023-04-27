@@ -1,6 +1,6 @@
 
 // source: https://www.regextester.com/?fam=110716
-const REGEX = /(\b(?:select|from|where|group|by|order|or|and|not|exists|having|join|left|right|inner)\b)|([A-Za-z][A-Za-z0-9]*)|([0-9]+\.[0-9]*)|([0-9]+)|('[^']*')|(\s+)|(\-\-[^\n\r]*)|([+\-\*/.=\(\)])/gmi;
+const REGEX = /(\b(?:select|from|where|group|by|order|or|and|not|exists|having|join|left|right|inner)\b)|([A-Za-z][A-Za-z0-9]*)|([0-9]+\.[0-9]*)|([0-9]+)|('[^']*')|(\s+)|(\-\-[^\n\r]*)|([+\-\*/.=\(\),;])/gmi;
 
 export type Token = {
   type: 'keyword' | 'identifier' | 'operator' | 'string' | 'integer' | 'decimal' | 'comment' | 'whitespace'
