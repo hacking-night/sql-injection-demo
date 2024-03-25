@@ -1,18 +1,10 @@
-import { Accordion, Alert } from "solid-bootstrap";
-import { Component, createEffect, createSignal, ErrorBoundary } from "solid-js";
-import Highlight from "solid-highlight";
-import "highlight.js/styles/default.css";
+import { Accordion } from "solid-bootstrap";
+import { Component, createSignal } from "solid-js";
 import {
   InjectionVisualizer,
   VulenerableSql,
 } from "./InjectionVisualizer/InjectionVisualizer";
 import { DatabaseResult } from "./DatabaseResult/DatabaseResult";
-
-const code = `username = getRequestString("username")
-password = getRequestString("password")
-
-sql = "SELECT * FROM users WHERE name = '" + username + "' AND password = '" + password + "'"
-`;
 
 const App: Component = () => {
   const [username, setUsername] = createSignal("erik");
@@ -74,9 +66,12 @@ const App: Component = () => {
         <Accordion.Item eventKey="0">
           <Accordion.Header>Code</Accordion.Header>
           <Accordion.Body>
-            <Highlight autoDetect={true} class="fs-5">
-              {code}
-            </Highlight>
+            <pre class="fs-5">
+              username = getRequestString(<span style="color: #0000FF">&quot;username&quot;</span>)<br />
+              password = getRequestString(<span style="color: #0000FF">&quot;password&quot;</span>)<br />
+              <br />
+              sql = <span style="color: #0000FF">&quot;SELECT * FROM users WHERE name = &#39;&quot;</span> + username + <span style="color: #0000FF">&quot;&#39; AND password = &#39;&quot;</span> + password + <span style="color: #0000FF">&quot;&#39;&quot;</span>
+            </pre>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
