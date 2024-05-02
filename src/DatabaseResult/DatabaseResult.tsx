@@ -2,6 +2,9 @@ import { Alert, Table } from "solid-bootstrap";
 import { For, Show } from "solid-js";
 import initSqlJs from "sql.js";
 
+// Use the bundled WASM binaries so that updates to the hosted version don' break this app
+const sqlJsFiles = import.meta.glob('/node_modules/sql.js/dist/*', { query: 'url', eager: true });
+
 const INIT_SQL = `
 CREATE TABLE users (id int, name char, password char);
 INSERT INTO users VALUES (1, 'erik', '123');
@@ -12,9 +15,7 @@ INSERT INTO users VALUES (5, 'bob', '333');
 `;
 
 const SQL = await initSqlJs({
-  // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
-  // You can omit locateFile completely when running in node
-  locateFile: (file) => `https://sql.js.org/dist/${file}`,
+  locateFile: (file) => sqlJsFiles[file] as string,
 });
 
 const db = new SQL.Database();
