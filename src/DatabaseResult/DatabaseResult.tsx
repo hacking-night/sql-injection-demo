@@ -15,7 +15,7 @@ INSERT INTO users VALUES (5, 'bob', '333');
 `;
 
 const SQL = await initSqlJs({
-  locateFile: (file) => sqlJsFiles[file] as string,
+  locateFile: (file) => (sqlJsFiles['/node_modules/sql.js/dist/' + file] as {default: string}).default,
 });
 
 const db = new SQL.Database();
