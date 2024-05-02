@@ -19,6 +19,6 @@
   "dependencies": {
     "solid-bootstrap": "^1.0.19",
     "solid-js": "^1.8.16",
-    "sql.js": "^1.10.2"
+    "sql.js": "^1.10.3"
   }
 }
