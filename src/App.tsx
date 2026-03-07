@@ -63,7 +63,7 @@ const App: Component = () => {
           </div>
         </form>
         <div style={{ "text-align": "center" }}>
-          <span style={{ cursor: "pointer" }} onClick={() => setWideForm(!wideForm())}>
+          <span style={{ cursor: "pointer", "user-select": "none" }} onClick={() => setWideForm(!wideForm())}>
             { wideForm() ? "–" : "↔" }
           </span>
         </div>
