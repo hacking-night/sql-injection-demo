@@ -1,5 +1,5 @@
-import { Alert, Table } from "solid-bootstrap";
-import { For, Show } from "solid-js";
+import { Alert, FormCheck, Table } from "solid-bootstrap";
+import { createSignal, For, Show } from "solid-js";
 import initSqlJs from "sql.js";
 
 // Use the bundled WASM binaries so that updates to the hosted version don' break this app
@@ -12,6 +12,9 @@ INSERT INTO users VALUES (2, 'admin', 'admin');
 INSERT INTO users VALUES (3, 'justus', '111');
 INSERT INTO users VALUES (4, 'peter', '222');
 INSERT INTO users VALUES (5, 'bob', '333');
+
+CREATE TABLE secrets (id int, key char, value char);
+INSERT INTO secrets VALUES (1, 'Answer to the Ultimate Question of Life, the Universe, and Everything', '42');
 `;
 
 const SQL = await initSqlJs({
@@ -22,6 +25,8 @@ const db = new SQL.Database();
 db.run(INIT_SQL);
 
 export function DatabaseResult(props: { query: string }) {
+  const [showTable, setShowTable] = createSignal(true);
+
   const execResult: () => { results: initSqlJs.QueryExecResult[], err?: unknown } = () => {
     try {
       return {results: db.exec(props.query)}
@@ -37,26 +42,34 @@ export function DatabaseResult(props: { query: string }) {
       <Show when={user()} fallback={<Alert variant="warning">Invalid credentials</Alert>}>
         <Alert variant="success">Signed in as <b>{"" + user()}</b>.</Alert>
       </Show>
-      <For each={execResult().results}>
-        {(result) => (
-          <Table striped bordered>
-            <thead>
-              <tr>
-                <For each={result.columns}>{(column) => <th>{column}</th>}</For>
-              </tr>
-            </thead>
-            <tbody>
-              <For each={result.values}>
-                {(row) => (
-                  <tr>
-                    <For each={row}>{(value) => <td>{"" + value}</td>}</For>
-                  </tr>
-                )}
-              </For>
-            </tbody>
-          </Table>
-        )}
-      </For>
+      <Show when={showTable()}>
+        <For each={execResult().results}>
+          {(result) => (
+            <Table striped bordered>
+              <thead>
+                <tr>
+                  <For each={result.columns}>{(column) => <th>{column}</th>}</For>
+                </tr>
+              </thead>
+              <tbody>
+                <For each={result.values}>
+                  {(row) => (
+                    <tr>
+                      <For each={row}>{(value) => <td>{"" + value}</td>}</For>
+                    </tr>
+                  )}
+                </For>
+              </tbody>
+            </Table>
+          )}
+        </For>
+      </Show>
+      <FormCheck
+        id="showTable"
+        label="Show table"
+        checked={showTable()}
+        onChange={(e) => setShowTable(e.currentTarget.checked)}
+      />
     </Show>
   );
 }
