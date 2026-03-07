@@ -9,6 +9,7 @@ import { DatabaseResult } from "./DatabaseResult/DatabaseResult";
 const App: Component = () => {
   const [username, setUsername] = createSignal("erik");
   const [password, setPassword] = createSignal("123");
+  const [wideForm, setWideForm] = createSignal(false);
 
   const sql: () => VulenerableSql = () => [
     { type: "static", text: "SELECT * FROM users WHERE name = '" },
@@ -32,7 +33,7 @@ const App: Component = () => {
       }}
       class="mt-5 mb-5"
     >
-      <div style={{ width: "300px" }}>
+      <div style={{ width: wideForm() ? "1200px" : "300px" }}>
         <form>
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
           <input type="text" style="display:none" />
@@ -61,6 +62,11 @@ const App: Component = () => {
             <label for="floatingPassword">Password</label>
           </div>
         </form>
+        <div style={{ "text-align": "center" }}>
+          <span style={{ cursor: "pointer" }} onClick={() => setWideForm(!wideForm())}>
+            { wideForm() ? "–" : "↔" }
+          </span>
+        </div>
       </div>
       <Accordion style={{ width: "1200px" }} class="mt-5">
         <Accordion.Item eventKey="0">
@@ -78,7 +84,7 @@ const App: Component = () => {
       <Accordion style={{ width: "1200px" }} class="mt-5">
         <Accordion.Item eventKey="0">
           <Accordion.Header>SQL</Accordion.Header>
-          <Accordion.Body>
+          <Accordion.Body style={{ "overflow-y": "auto" }}>
             <InjectionVisualizer sql={sql()} />
           </Accordion.Body>
         </Accordion.Item>
